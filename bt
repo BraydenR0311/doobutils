@@ -1,0 +1,62 @@
+#!/bin/python
+
+import subprocess
+import re
+
+CHOICES = ["connect", "disconnect"]
+
+
+def scan() -> None:
+    subprocess.run(["bluetoothctl", "scan", "on"])
+
+
+def get_choice() -> str:
+    data = subprocess.run(
+        ["dmenu"], input="\n".join(CHOICES), capture_output=True, text=True
+    ).stdout
+    return data.strip()
+
+
+def get_devices() -> dict[str, str]:
+    data = subprocess.run(
+        ["bluetoothctl", "devices"], capture_output=True, text=True
+    ).stdout
+
+    matches = re.findall(
+        r"Device\s+((?:\w{2}:){5}\w{2})\s(.+)",
+        data,
+        re.IGNORECASE,
+    )
+
+    return {entry[1]: entry[0] for entry in matches}
+
+
+def get_mac(device_dict: dict[str, str]) -> str | None:
+    choice = subprocess.run(
+        ["dmenu"],
+        input="\n".join(device_dict.keys()),
+        capture_output=True,
+        text=True,
+    ).stdout
+
+    return device_dict.get(choice.strip())
+
+
+def action(action: str, mac: str | None = None) -> str:
+    output = subprocess.run(
+        ["bluetoothctl", action, mac or ""], capture_output=True, text=True
+    ).stdout
+    return output
+
+
+def main():
+    scan()
+    choice = get_choice()
+    devices = get_devices()
+    mac = get_mac(devices)
+    print(action(choice, mac))
+    return
+
+
+if __name__ == "__main__":
+    main()

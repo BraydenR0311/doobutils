@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+function send_notification() {
+    volume=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | sed 's/%//g' | head -n1)
+    dunstify -a "changevol" -u low -i "audio-volume-high-symbolic" -r 1234 -t 2000 -h int:value:"$volume" "   ${volume}%"
+}
+
+case $1 in
+up)
+    pactl set-sink-volume @DEFAULT_SINK@ +2%
+    send_notification
+    ;;
+down)
+    pactl set-sink-volume @DEFAULT_SINK@ -2%
+    send_notification
+    ;;
+mute)
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+    send_notification
+    ;;
+esac

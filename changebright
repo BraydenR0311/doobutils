@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+function send_notification() {
+    brightness=$(brightnessctl | grep -oP '\d+%' | sed 's/%//g')
+    dunstify -a "changebright" -u low -r 1234 -t 2000 -h int:value:"$brightness" "  ${brightness}%"
+}
+
+case $1 in
+up)
+    brightnessctl s +5%
+    send_notification
+    ;;
+down)
+    brightnessctl s 5%-
+    send_notification
+    ;;
+esac
