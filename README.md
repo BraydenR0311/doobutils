@@ -14,12 +14,14 @@ chmod u+x ./install.sh
 
 ## Utilities
 
+
+
 ### bt
 Way for me to connect or disconnect to my bluetooth devices. Uses python to run subprocesses and parse text.
 
 ### wp
 Apply wallpaper to a directory by selecting it in dmenu.
-
+![image](https://github.com/user-attachments/assets/4179ce97-8f32-4b07-aa26-93b8c215bf4b)
 ### change[bright|vol]
 Convenience script to change brightness and volume while sending a notification.
 
