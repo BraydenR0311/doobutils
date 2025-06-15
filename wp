@@ -1,0 +1,11 @@
+#!/bin/bash
+
+WALLPAPER_DIR="$HOME/Pictures/wallpapers/"
+
+if [ ! -d  $WALLPAPER_DIR ]; then
+  echo "Error: wallpaper directory not found"
+fi
+
+
+file=$(find $WALLPAPER_DIR -type f | dmenu)
+feh --bg-fill "$file"
