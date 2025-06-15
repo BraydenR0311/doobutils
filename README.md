@@ -25,3 +25,6 @@ Convenience script to change brightness and volume while sending a notification.
 
 I bind this to my volume and brightness keys in .xbindkeys
 
+### bat.sh
+Run by dwm's slstatus every couple seconds to display battery status. Updates icon and sends notification if battery is running low
+
