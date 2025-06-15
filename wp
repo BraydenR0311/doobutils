@@ -7,5 +7,5 @@ if [ ! -d  $WALLPAPER_DIR ]; then
 fi
 
 
-file=$(find $WALLPAPER_DIR -type f | dmenu)
+file=$(find "$WALLPAPER_DIR" -type f | dmenu)
 feh --bg-fill "$file"
